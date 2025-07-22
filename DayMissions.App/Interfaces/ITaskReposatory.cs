@@ -11,7 +11,9 @@ namespace DayMissions.App.Interfaces
     {
         public IEnumerable<TaskDefination> Get();
         public TaskDefination GetTask(int id);
+        public IEnumerable<TaskDefination> GetActive();
         public TaskDefination Add(TaskDefination taskDefination);
+        public void UpdateActive( );    
         public void Update( );
         public void Delete(int id);
         

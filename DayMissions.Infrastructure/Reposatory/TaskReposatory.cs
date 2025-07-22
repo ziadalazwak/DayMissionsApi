@@ -25,7 +25,10 @@ namespace DayMissions.Infrastructure.Reposatory
             _context.SaveChanges();
             return taskDefination;
         }
-
+        public void UpdateActive()
+        {
+            _context.SaveChanges();
+        }
         public void Delete(int id)
         {
             var task=_context.Tasks.Find(id);
@@ -34,9 +37,14 @@ namespace DayMissions.Infrastructure.Reposatory
 
         }
 
+        public IEnumerable<TaskDefination> GetActive()
+        {
+            var tasks= _context.Tasks.Where(a=>a.Active==true);
+            return tasks;
+        }
         public IEnumerable<TaskDefination> Get()
         {
-            var tasks= _context.Tasks.Include(a=>a.Tracks);
+            var tasks = _context.Tasks.Include(a=>a.Tracks);
             return tasks;
         }
 
@@ -47,7 +55,7 @@ namespace DayMissions.Infrastructure.Reposatory
             if (task != null) return task;
             return null;
         }
-
+        
         public void Update( )
         {
           

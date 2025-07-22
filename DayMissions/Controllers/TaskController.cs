@@ -15,6 +15,16 @@ namespace DayMissions.api.Controllers
             this.taskService=taskService;
         }
         [HttpGet]
+        public IActionResult GetActveTasks() {
+            var tasks = taskService.GetActive();
+            return Ok(tasks);
+        }
+        [HttpPatch("{id}")]
+        public IActionResult UpdateActive(int id) { 
+            var task =taskService.UpdateActive(id);
+            return Ok(task);
+        }
+        [HttpGet("{id}")]
         public IActionResult Get(int id) {
             var tasks = taskService.GetTask(id);
             if (tasks == null) { return NotFound(); }
@@ -33,7 +43,7 @@ namespace DayMissions.api.Controllers
             if (updatetask==null) return BadRequest("could't update ");
             return Ok(updatetask);
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id )
         {
             taskService.DeleteTask(id);

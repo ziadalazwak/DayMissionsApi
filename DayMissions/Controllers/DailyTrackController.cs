@@ -7,10 +7,10 @@ namespace DayMissions.api.Controllers
 {
     [ApiController]
     [Route("api/DailyTrack")]
-    public class DailyTrackController:ControllerBase
+    public class DailyTrackController : ControllerBase
     {
         private readonly ITrackService _trackService;
-      public  DailyTrackController(ITrackService trackService)
+        public DailyTrackController(ITrackService trackService)
         {
             _trackService = trackService;
         }
@@ -24,15 +24,15 @@ namespace DayMissions.api.Controllers
 
 
         }
-       [HttpGet("{id}")]
-       public IActionResult Get(int id)
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
         {
             var track = _trackService.get(id);
-            if(track==null) return NotFound();
+            if (track==null) return NotFound();
             return Ok(track);
         }
         [HttpPost]
-        public IActionResult Add(AddTrack Dailytrack) { 
+        public IActionResult Add(AddTrack Dailytrack) {
             //Tempratory because of swagger
             Dailytrack.IsFinished = false;
             Dailytrack.Date=DateOnly.FromDateTime(DateTime.Now);
@@ -41,19 +41,19 @@ namespace DayMissions.api.Controllers
             return Ok(track);
         }
         [HttpPut("{id}")]
-        public IActionResult Update(int id,UpdateTrack DailyTrack) {
+        public IActionResult Update(int id, UpdateTrack DailyTrack) {
 
             var track = _trackService.Update(id, DailyTrack);
             if (track==null) return BadRequest("couldn't Update track");
             return Ok(track);
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _trackService.Delete(id);
             return Ok();
         }
-        [HttpPatch]
+        [HttpPatch("{id}")]
         public IActionResult UpdateFinish(int id )
         {
             var track=_trackService.UpdateFinish(id);

@@ -1,6 +1,7 @@
 ﻿using DayMissions.App.Dtos.Task;
 using DayMissions.Domain.Entities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -55,6 +56,21 @@ namespace DayMissions.App.Mapping
                 Tracks=tsk.Tracks.MapToGetTracks()
 
             };
+            return task;
+
+        }
+        public static  IEnumerable< GetTask> MapToGetActiveTasks(this IEnumerable<TaskDefination> tsk)
+        {
+            if (tsk==null) return null;
+            IEnumerable< GetTask >task = tsk.Select(a=>
+                new GetTask
+            {
+                Id=a.Id,
+                Name=a.Name,
+                Active=a.Active,
+                
+
+            });
             return task;
 
         }

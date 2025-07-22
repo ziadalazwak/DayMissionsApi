@@ -1,4 +1,5 @@
-﻿using DayMissions.App.Dtos.Task;
+﻿using DayMissions.App.Dtos.DailyTrack;
+using DayMissions.App.Dtos.Task;
 using DayMissions.App.Interfaces;
 using DayMissions.App.Mapping;
 using System;
@@ -31,6 +32,18 @@ namespace DayMissions.App.Services
             return gettask;
         }
 
+        public GetTask UpdateActive(int id)
+        {
+            var task = repo.GetTask(id);
+            if (task==null) return null;
+
+            task.Active=!task.Active ; 
+            repo.UpdateActive();
+            var gettask = task.MapToGetTask();
+            return gettask;
+
+        }
+
         public GetTask UpdateTask(int id ,UpdateTask updatetask)
         {
             
@@ -51,6 +64,12 @@ namespace DayMissions.App.Services
         public void DeleteTask(int id)
         {
             repo.Delete(id);
+        }
+        public IEnumerable<GetTask> GetActive()
+        {
+            var tasks = repo.GetActive();
+            var gettask = tasks.MapToGetActiveTasks();
+            return gettask;
         }
     }
 }
