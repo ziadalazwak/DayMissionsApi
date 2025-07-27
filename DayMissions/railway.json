@@ -1,4 +1,4 @@
 {
   "build": "dotnet publish -c Release -o out",
-  "start": "dotnet out/DayMissionsApi.dll"
+  "start": "dotnet out/DayMissions.api.dll"
 }
