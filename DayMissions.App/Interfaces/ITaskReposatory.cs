@@ -9,9 +9,9 @@ namespace DayMissions.App.Interfaces
 {
     public interface ITaskReposatory
     {
-        public IEnumerable<TaskDefination> Get();
+        public IEnumerable<TaskDefination> Get(string Id);
         public TaskDefination GetTask(int id);
-        public IEnumerable<TaskDefination> GetActive();
+        public IEnumerable<TaskDefination> GetActive(string Id);
         public TaskDefination Add(TaskDefination taskDefination);
         public void UpdateActive( );    
         public void Update( );

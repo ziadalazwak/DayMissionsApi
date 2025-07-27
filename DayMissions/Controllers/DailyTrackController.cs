@@ -1,12 +1,14 @@
 ﻿using DayMissions.App.Dtos.DailyTrack;
 using DayMissions.App.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DayMissions.api.Controllers
 {
     [ApiController]
-    [Route("api/DailyTrack")]
+    [Route("api/[controller]")]
+  
     public class DailyTrackController : ControllerBase
     {
         private readonly ITrackService _trackService;

@@ -11,7 +11,7 @@ namespace DayMissions.Domain.Entities
         public int Id { get; set; }
         public DateOnly Date { get; set; } 
         public int TaskDefinationId { get; set; }
-        public bool IsFinished { get; set; } = false;
+        public bool IsFinished { get; set; } =false; // Default value is false
         public TaskDefination TaskDefination {  get; set; }
 
     }

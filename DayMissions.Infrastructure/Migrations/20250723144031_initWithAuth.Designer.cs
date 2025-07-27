@@ -4,6 +4,7 @@ using DayMissions.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DayMissions.Infrastructure.Migrations
 {
     [DbContext(typeof(DayMissionsDbcContext))]
-    partial class DayMissionsDbcContextModelSnapshot : ModelSnapshot
+    [Migration("20250723144031_initWithAuth")]
+    partial class initWithAuth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,51 @@ namespace DayMissions.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DayMissions.Domain.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("DayMissions.Domain.Entities.DailyTrack", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("IsFinished")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TaskDefinationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaskDefinationId");
+
+                    b.ToTable("Tracks");
+                });
+
+            modelBuilder.Entity("DayMissions.Domain.Entities.TaskDefination", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("DayMissions.Infrastructure.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -85,56 +132,6 @@ namespace DayMissions.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("DayMissions.Domain.Entities.DailyTrack", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<bool>("IsFinished")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("TaskDefinationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TaskDefinationId");
-
-                    b.ToTable("Tracks");
-                });
-
-            modelBuilder.Entity("DayMissions.Domain.Entities.TaskDefination", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -281,17 +278,6 @@ namespace DayMissions.Infrastructure.Migrations
                     b.Navigation("TaskDefination");
                 });
 
-            modelBuilder.Entity("DayMissions.Domain.Entities.TaskDefination", b =>
-                {
-                    b.HasOne("DayMissions.Domain.Entities.ApplicationUser", "User")
-                        .WithMany("Tasks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -303,7 +289,7 @@ namespace DayMissions.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("DayMissions.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("DayMissions.Infrastructure.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -312,7 +298,7 @@ namespace DayMissions.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("DayMissions.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("DayMissions.Infrastructure.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -327,7 +313,7 @@ namespace DayMissions.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DayMissions.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("DayMissions.Infrastructure.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -336,16 +322,11 @@ namespace DayMissions.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("DayMissions.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("DayMissions.Infrastructure.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("DayMissions.Domain.Entities.ApplicationUser", b =>
-                {
-                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("DayMissions.Domain.Entities.TaskDefination", b =>

@@ -24,9 +24,10 @@ namespace DayMissions.App.Services
             return getTask;
         }
 
-        public GetTask AddTask(AddTask addtask)
+        public GetTask AddTask(AddTask addtask, string UserId)
         {
             var task = addtask.MapToTask();
+            task.UserId = UserId; // Set the UserId from the parameter
             var add = repo.Add(task);
             var gettask = add.MapToGetTask();
             return gettask;
@@ -65,9 +66,9 @@ namespace DayMissions.App.Services
         {
             repo.Delete(id);
         }
-        public IEnumerable<GetTask> GetActive()
+        public IEnumerable<GetTask> GetActive(string UserId)
         {
-            var tasks = repo.GetActive();
+            var tasks = repo.GetActive(UserId);
             var gettask = tasks.MapToGetActiveTasks();
             return gettask;
         }

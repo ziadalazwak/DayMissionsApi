@@ -13,7 +13,7 @@ namespace DayMissions.Infrastructure.Reposatory
     {
         private readonly DayMissionsDbcContext _context;
 
-       public DailyTrackerReposatory(DayMissionsDbcContext context)
+        public DailyTrackerReposatory(DayMissionsDbcContext context)
         {
             _context=context;
         }
@@ -24,16 +24,16 @@ namespace DayMissions.Infrastructure.Reposatory
                 );
             _context.SaveChanges();
             return track;
-                  
+
         }
 
         public void Delete(int id)
         {
             var track = Get(id);
-            if (track == null) return ;
+            if (track == null) return;
             _context.Tracks.Remove(track);
             _context.SaveChanges();
-            
+
         }
         public void UpdateFinish()
         {
@@ -47,7 +47,7 @@ namespace DayMissions.Infrastructure.Reposatory
 
         public DailyTrack Get(int id)
         {
-            var track =_context.Tracks.Include(a=>a.TaskDefination).FirstOrDefault(a=>a.Id==id);
+            var track = _context.Tracks.Include(a => a.TaskDefination).FirstOrDefault(a => a.Id==id);
             if (track==null) return null;
 
             return track;

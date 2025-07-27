@@ -19,7 +19,7 @@ namespace DayMissions.Infrastructure.Reposatory
 
         public TaskDefination Add(TaskDefination taskDefination)
         {
-           if(taskDefination == null)  return null;
+            if (taskDefination == null) return null;
 
             _context.Tasks.Add(taskDefination);
             _context.SaveChanges();
@@ -31,37 +31,37 @@ namespace DayMissions.Infrastructure.Reposatory
         }
         public void Delete(int id)
         {
-            var task=_context.Tasks.Find(id);
+            var task = _context.Tasks.Find(id);
             if (task != null) _context.Remove(task);
             _context.SaveChanges();
 
         }
 
-        public IEnumerable<TaskDefination> GetActive()
+        public IEnumerable<TaskDefination> GetActive(string Id)
         {
-            var tasks= _context.Tasks.Where(a=>a.Active==true);
+            var tasks = _context.Tasks.Where(a => a.Active==true&&a.UserId==Id);
             return tasks;
         }
-        public IEnumerable<TaskDefination> Get()
+        public IEnumerable<TaskDefination> Get(string Id)
         {
-            var tasks = _context.Tasks.Include(a=>a.Tracks);
+            var tasks = _context.Tasks.Include(a => a.Tracks).Where(a=>a.UserId==Id);
             return tasks;
         }
 
         public TaskDefination GetTask(int id)
         {
-            var task= _context.Tasks.Include(a=>a.Tracks).FirstOrDefault(a=>a.Id==id);
+            var task = _context.Tasks.Include(a => a.Tracks).FirstOrDefault(a => a.Id==id);
 
             if (task != null) return task;
             return null;
         }
-        
-        public void Update( )
+
+        public void Update()
         {
-          
+
             _context.SaveChanges();
-           
-            
+
+
 
         }
     }
