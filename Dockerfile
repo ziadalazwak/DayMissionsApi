@@ -5,8 +5,8 @@ WORKDIR /src
 # Copy everything from the repo into the Docker build
 COPY . .
 
-# Publish your .NET project to the /app folder
-RUN dotnet publish DayMissions.App/DayMissions.App.csproj -c Release -o /app
+# Publish your .NET API project to the /app folder
+RUN dotnet publish DayMissions/DayMissions.api.csproj -c Release -o /app
 
 # Step 2: Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
@@ -19,5 +19,5 @@ COPY --from=build /app ./
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://+:8080
 
-# Start the app - update this if the DLL name is different!
-ENTRYPOINT ["dotnet", "DayMissions.App.dll"]
+# Start the API
+ENTRYPOINT ["dotnet", "DayMissions.api.dll"]
