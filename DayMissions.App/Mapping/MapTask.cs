@@ -18,6 +18,7 @@ namespace DayMissions.App.Mapping
                 Name=addtask.Name,
                  Active=addtask.Active,
                  
+                 
             };
             return task;
 
@@ -54,6 +55,10 @@ namespace DayMissions.App.Mapping
                 Name=tsk.Name,
                 Active=tsk.Active,
                 Tracks=tsk.Tracks.MapToGetTracks()
+                ,
+                CurrentStreak=tsk.CurrentStreak,
+                LongestStreak=tsk.LongestStreak,
+
 
             };
             return task;
@@ -68,9 +73,11 @@ namespace DayMissions.App.Mapping
                 Id=a.Id,
                 Name=a.Name,
                 Active=a.Active,
-                
+                CurrentStreak=a.CurrentStreak,
+                    LongestStreak=a.LongestStreak,
 
-            });
+
+                });
             return task;
 
         }

@@ -10,7 +10,7 @@ namespace DayMissions.App.Interfaces
     public interface IDailyTrackerReposatory
     {
         public IQueryable<DailyTrack> Get();
-        public void UpdateFinish();
+        public DailyTrack UpdateFinish(int id);
         public DailyTrack Get(int id);
         public DailyTrack Add(DailyTrack track);
         public void Update();

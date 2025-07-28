@@ -35,9 +35,30 @@ namespace DayMissions.Infrastructure.Reposatory
             _context.SaveChanges();
 
         }
-        public void UpdateFinish()
+        public DailyTrack UpdateFinish(int id )
         {
+         
+            var track = _context.Tracks.Include(a => a.TaskDefination).FirstOrDefault(a => a.Id==id);
+            var task = track.TaskDefination;
+            if (track==null) return null;
+            track.IsFinished = !track.IsFinished;
+            if (task.LastCompletedDate==DateTime.Today.AddDays(-1))
+            {
+                task.CurrentStreak++;
+            }
+            else if (task.LastCompletedDate==null || task.LastCompletedDate<DateTime.Today.AddDays(-1))
+            {
+                task.CurrentStreak = 1;
+
+            }
+            task.LastCompletedDate = DateTime.Today;
+            if (task.CurrentStreak>task.LongestStreak)
+            {
+                task.LongestStreak = task.CurrentStreak;
+            }
             _context.SaveChanges();
+
+            return track;
         }
         public IQueryable<DailyTrack> Get()
         {

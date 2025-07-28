@@ -27,11 +27,10 @@ namespace DayMissions.App.Services
         }
         public GetTrack UpdateFinish(int id )
         {
-            var track=repo.Get(id);
+            var track=repo.UpdateFinish(id);
             if (track==null) return null;
             
-            track.IsFinished = !track.IsFinished;
-            repo.UpdateFinish();
+    
             var gettrack=track.MapToGetTrack();
             return gettrack;
 

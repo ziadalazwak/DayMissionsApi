@@ -13,6 +13,9 @@ namespace DayMissions.Domain.Entities
         public string Name { get; set; }
         public bool Active { get; set; }
         public string UserId { get; set; }
+        public int CurrentStreak { get; set; }
+        public int LongestStreak { get; set; }
+        public DateTime? LastCompletedDate { get; set; }
         public ICollection<DailyTrack> Tracks { get; set; }
         public ApplicationUser User { get; set; }
 
