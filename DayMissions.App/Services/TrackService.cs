@@ -41,17 +41,17 @@ namespace DayMissions.App.Services
             repo.Delete(id);
         }
 
-        public GetTrack get(int id)
+        public GetTrack get(int id )
         {
             var track = repo.Get(id);
             var gettrack = track.MapToGetTrack();
             return gettrack;
         }
 
-        public IEnumerable<GetTrack> Get(DateOnly date)
+        public IEnumerable<GetTrack> Get(DateOnly date,string UserId)
         {
-
-            var tracks = repo.Get().Where(a=>a.Date==date);
+             
+            var tracks = repo.Get(UserId).Where(a=>a.Date==date);
             var gettracks = tracks.MapToGetTracks();
             return gettracks;
         }

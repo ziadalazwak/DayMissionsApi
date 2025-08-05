@@ -15,7 +15,7 @@ namespace DayMissions.App.Interfaces
         public GetTrack UpdateFinish(int id);
         public GetTrack get(int id);
 
-        public IEnumerable<GetTrack> Get(DateOnly date);
+        public IEnumerable<GetTrack> Get(DateOnly date,string UserId);
     }
 
 }

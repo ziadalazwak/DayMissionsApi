@@ -72,5 +72,11 @@ namespace DayMissions.App.Services
             var gettask = tasks.MapToGetActiveTasks();
             return gettask;
         }
+        public IEnumerable<GetTask> GetIdle(string UserId)
+        {
+            var tasks = repo.GetIdle(UserId);
+            var gettask = tasks.MapToGetActiveTasks();
+            return gettask;
+        }
     }
 }

@@ -2,13 +2,14 @@
 using DayMissions.App.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DayMissions.api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-  
+    [Authorize]
     public class DailyTrackController : ControllerBase
     {
         private readonly ITrackService _trackService;
@@ -19,8 +20,9 @@ namespace DayMissions.api.Controllers
         [HttpGet]
         public IActionResult Get([FromQuery] DateOnly? date = null)
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;  
             var targetDate = date ?? DateOnly.FromDateTime(DateTime.Now);
-            var tracks = _trackService.Get(targetDate);
+            var tracks = _trackService.Get(targetDate,userId);
             if (tracks==null) return NotFound();
             return Ok(tracks);
 
@@ -35,7 +37,7 @@ namespace DayMissions.api.Controllers
         }
         [HttpPost]
         public IActionResult Add(AddTrack Dailytrack) {
-            //Tempratory because of swagger
+           
             Dailytrack.IsFinished = false;
             Dailytrack.Date=DateOnly.FromDateTime(DateTime.Now);
             var track = _trackService.Add(Dailytrack);

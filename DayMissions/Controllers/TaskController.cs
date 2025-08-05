@@ -24,11 +24,18 @@ namespace DayMissions.api.Controllers
             this.taskService=taskService;
          
         }
-        [HttpGet]
-        [Authorize]
+        [HttpGet("ActiveTasks")]
+   
         public IActionResult GetActveTasks() {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var tasks = taskService.GetActive(userId);
+            return Ok(tasks);
+        }
+        [HttpGet("IdleTasks")]
+        public IActionResult GetIdleTasks()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var tasks = taskService.GetIdle(userId);
             return Ok(tasks);
         }
         [HttpPatch("{id}")]

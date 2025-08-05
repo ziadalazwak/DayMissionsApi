@@ -42,6 +42,11 @@ namespace DayMissions.Infrastructure.Reposatory
             var tasks = _context.Tasks.Where(a => a.Active==true&&a.UserId==Id);
             return tasks;
         }
+        public IEnumerable<TaskDefination> GetIdle(string Id)
+        {
+            var tasks = _context.Tasks.Where(a => a.Active==false&&a.UserId==Id);
+            return tasks;
+        }
         public IEnumerable<TaskDefination> Get(string Id)
         {
             var tasks = _context.Tasks.Include(a => a.Tracks).Where(a=>a.UserId==Id);

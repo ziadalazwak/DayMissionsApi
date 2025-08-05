@@ -93,10 +93,11 @@ namespace DayMissions.Infrastructure.Reposatory
         }
 
 
-        public IQueryable<DailyTrack> Get()
+        public IQueryable<DailyTrack> Get(string userId)
         {
-            var tracks = _context.Tracks.Include(a => a.TaskDefination).AsQueryable();
-            return tracks;
+            return _context.Tracks
+         .Where(t => t.TaskDefination.UserId == userId).Include(t => t.TaskDefination);
+
         }
 
         public DailyTrack Get(int id)
